@@ -1,0 +1,16 @@
+function doPost(e){
+  var s = SpreadsheetApp.openById("1XyPFns0D_0GLC5CXP_cuDWsx4p_62c2ks9gjRXNdFOI");
+  var ss = s.getSheetByName("Log")
+  var params = JSON.parse(e);
+  ss.appendRow([params]);
+  
+  //Alternate method
+  var col=1
+  var row = ss.getLastRow()+1;
+  for (var key in params) {
+    var value = params[key];
+    ss.getRange(row, col).setValue(value)
+    col-col+1
+  }
+  return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON); 
+}
