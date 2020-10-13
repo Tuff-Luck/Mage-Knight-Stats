@@ -1,2 +1,45 @@
-I got it working. Yay
-This is to see how two lines is reported.
+--List of Variables I want to store. 
+--At the half hour mark I will request permissinon to save these values to my google sheet.
+GameRecord={gameScenario=gStates.gameScenario,
+			blitz=gStates.blitz,
+			rounds=scenarioList[gStates.scenarioRef][gStates.playersRef].rounds,
+			mapShape=scenarioList[gStates.scenarioRef][gStates.playersRef].mapShape,
+			countryTiles=scenarioList[gStates.scenarioRef][gStates.playersRef].countryTiles,
+			coreTiles=scenarioList[gStates.scenarioRef][gStates.playersRef].coreTiles,
+			cityTiles=scenarioList[gStates.scenarioRef][gStates.playersRef].cityTiles,
+			cityLevels=scenarioList[gStates.scenarioRef][gStates.playersRef].cityLevels,
+			randomTileOrientation=gStates.randomTileOrientation,
+			volkareCampAsCity=gStates.volkareCampAsCity,
+			megapolis=gStates.megapolis,
+			randomCities=gStates.randomCities,
+			positionMageKnight=gStates.positionMageKnight,
+			includeYmirgh=gStates.includeYmirgh,
+			dummyAllSkills=gStates.dummyAllSkills,
+			mageKnightLevels=gStates.mageKnightLevels,
+			rampagePursuit=gStates.rampagePursuit,
+			rampageAmbush=gStates.rampageAmbush,
+			rampage=gStates.rampage,
+			removeLostLegionExpansion=gStates.removeLostLegionExpansion,
+			shadesOfTezlaPugs=gStates.shadesOfTezlaPugs,
+			volkareCombatLevel=gStates.volkareCombatLevel,
+			volkareRaceLevel=gStates.volkareRaceLevel,
+			darknessComing=gStates.darknessComing,
+			startAtNight=gStates.startAtNight,
+			questMod=gStates.questMod,
+			weatherMod=gStates.weatherMod,
+			autoFlip=gStates.autoFlip,
+			offerSize=gStates.offerSize}
+
+--I have this somewhere else, but this is the function call I'm using. 10 seconds is for testing
+onload()
+  loadStats(10, true)--time in seconds, 1800=1/2 hour, 3600=1 hour
+end
+
+--Extremely simplified version of the Stats Writer.
+function loadStats(initial_wait, DEBUG)
+  local STAT_URL="https://script.google.com/macros/s/AKfycbzC-a1nQ6YwdN9nFBehuSRTR5Ts-7EzKlQbLdgiVQ/exec"
+	Wait.time(function()
+		if DEBUG then log("Writing stats.") end
+		WebRequest.post(STAT_URL, GameRecord, function(w) if DEBUG then log(w.text) end end)
+	end, initial_wait)--time in seconds, 1800=1/2 hour, 3600=1 hour
+end
